@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: pg-partition-cleanup
+  datasource:
+    url: jdbc:postgresql://db.nrhsoabqeskybrznxfyi.supabase.co:5432/postgres
+    username: postgres
+    password: Sreeja1608!@
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: CADS
+
+server:
+  port: 8080

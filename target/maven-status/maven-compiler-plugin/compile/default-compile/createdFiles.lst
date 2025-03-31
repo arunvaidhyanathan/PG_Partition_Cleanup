@@ -1,0 +1,8 @@
+com/arunvaidhyanathan/pgpartitioncleanup/scheduler/PartitionCleanupScheduler.class
+com/arunvaidhyanathan/pgpartitioncleanup/repository/TableListRepository.class
+com/arunvaidhyanathan/pgpartitioncleanup/repository/EmptyPartitionRepository.class
+com/arunvaidhyanathan/pgpartitioncleanup/model/EmptyPartition.class
+com/arunvaidhyanathan/pgpartitioncleanup/controller/PartitionController.class
+com/arunvaidhyanathan/pgpartitioncleanup/model/TableList.class
+com/arunvaidhyanathan/pgpartitioncleanup/service/PartitionService.class
+com/arunvaidhyanathan/pgpartitioncleanup/PgPartitionCleanupApplication.class

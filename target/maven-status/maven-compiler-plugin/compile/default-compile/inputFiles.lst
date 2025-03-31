@@ -1,0 +1,8 @@
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/scheduler/PartitionCleanupScheduler.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/controller/PartitionController.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/service/PartitionService.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/model/TableList.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/repository/TableListRepository.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/PgPartitionCleanupApplication.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/repository/EmptyPartitionRepository.java
+/Users/arunvaidhyanathan/Developer/PG_Partition_Cleanup/src/main/java/com/arunvaidhyanathan/pgpartitioncleanup/model/EmptyPartition.java
