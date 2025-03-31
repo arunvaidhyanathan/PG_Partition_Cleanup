@@ -30,16 +30,20 @@ public class PartitionService {
     private EmptyPartitionRepository emptyPartitionRepository;
     
     /**
-     * Identifies all tables in the CADS schema and stores them in the TABLE_LIST table
-     * @return The number of tables identified
+     * Identifies tables with partitions in the CADS schema and stores them in the TABLE_LIST table
+     * @return The number of tables with partitions identified
      */
     @Transactional
     public int identifyTables() {
-        log.info("Starting to identify tables in CADS schema");
+        log.info("Starting to identify tables with partitions in CADS schema");
         
-        // Query to get all tables in the CADS schema
-        String sql = "SELECT table_name FROM information_schema.tables " +
-                     "WHERE table_schema = 'CADS' AND table_type = 'BASE TABLE'";
+        // Query to get tables with partitions in the CADS schema
+        String sql = "SELECT c.relname AS table_name " +
+                     "FROM pg_inherits i " +
+                     "JOIN pg_class c ON c.oid = i.inhparent " +
+                     "JOIN pg_namespace n ON n.oid = c.relnamespace " +
+                     "WHERE n.nspname = 'cads' " +
+                     "GROUP BY c.relname";
         
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         int count = 0;
@@ -47,18 +51,15 @@ public class PartitionService {
         for (Map<String, Object> row : rows) {
             String tableName = (String) row.get("table_name");
             
-            // Check if the table has partitions
-            boolean hasPartitions = checkIfTableHasPartitions(tableName);
-            
             // Only add if it doesn't already exist
-            if (!tableListRepository.existsByTableNameAndTableSchema(tableName, "CADS")) {
-                TableList tableList = new TableList(tableName, "CADS", hasPartitions);
+            if (!tableListRepository.existsByTableNameAndTableSchema(tableName, "cads")) {
+                TableList tableList = new TableList(tableName, "cads", true);
                 tableListRepository.save(tableList);
                 count++;
             }
         }
         
-        log.info("Identified {} tables in CADS schema", count);
+        log.info("Identified {} tables with partitions in CADS schema", count);
         return count;
     }
     
@@ -71,7 +72,7 @@ public class PartitionService {
         String sql = "SELECT count(*) FROM pg_inherits i " +
                      "JOIN pg_class c ON c.oid = i.inhparent " +
                      "JOIN pg_namespace n ON n.oid = c.relnamespace " +
-                     "WHERE n.nspname = 'CADS' AND c.relname = ?";
+                     "WHERE n.nspname = 'cads' AND c.relname = ?";
         
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, tableName);
         return count != null && count > 0;
@@ -136,11 +137,11 @@ public class PartitionService {
         for (EmptyPartition partition : emptyPartitions) {
             try {
                 // Drop the partition
-                String sql = "ALTER TABLE \"CADS\".\""+partition.getTableName()+"\" DETACH PARTITION \"CADS\".\""+partition.getPartitionName()+"\"";
+                String sql = "ALTER TABLE \"CADS\".\""+partition.getTableName()+"\" DETACH PARTITION \"cads\".\""+partition.getPartitionName()+"\"";
                 jdbcTemplate.execute(sql);
                 
                 // Drop the detached table
-                String dropSql = "DROP TABLE \"CADS\".\""+partition.getPartitionName()+"\"";
+                String dropSql = "DROP TABLE \"cads\".\""+partition.getPartitionName()+"\"";
                 jdbcTemplate.execute(dropSql);
                 
                 // Update the record
